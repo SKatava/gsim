@@ -2,7 +2,6 @@
 #include <iomanip>
 #include <cassert>
 #include <math.h>
-#include "gsim-simulation/ObjectView.h"   // adjust to your actual header path
 #include "gsim-simulation/GravityEngine.h"
 
 
