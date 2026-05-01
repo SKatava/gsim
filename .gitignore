@@ -1,0 +1,12 @@
+build-debug/
+build-release/
+external/*
+!external/ 
+!external/CMakeLists.txt
+*.o
+*.a
+*.so
+perf.data*
+flame.svg
+out.perf
+*.swp
