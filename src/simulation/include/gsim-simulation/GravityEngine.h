@@ -25,7 +25,7 @@ class GravityEngine {
         
         void init(ObjectData& data);
         void setMethod(CalculationMethod method);
-        void step(float dt);
+        void step();
 
     private:
         ObjectData* m_data {nullptr};
@@ -34,6 +34,6 @@ class GravityEngine {
 
         //=====Private Functions=====
         void assertValid() const noexcept; 
-        void directImplementation(float dt) const;
-        void barnesHutImplementation(float dt) const;
+        void directImplementation() const;
+        void barnesHutImplementation() const;
 };

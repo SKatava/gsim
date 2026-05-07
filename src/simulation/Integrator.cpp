@@ -13,6 +13,7 @@ void Integrator::init(ObjectData& data) {
 void Integrator::step(float dt) {
     assertValid();
     for(int i {}; i < m_data->size(); ++i) {
+        m_data->velocities[i] += m_data->accels[i] * dt; 
         m_data->positions[i] += m_data->velocities[i] * dt;
     }
 }

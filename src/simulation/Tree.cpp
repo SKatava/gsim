@@ -51,7 +51,7 @@ void Tree::accumulateMass(int nodeIndex) {
     Node& node = m_nodes[nodeIndex];
 
     if (node.body >= 0) {
-        node.mass = m_data->masses[node.body];
+        node.mass = m_data->positions[node.body].w;
         node.cm = m_data->positions[node.body];
         return;
     }
@@ -94,37 +94,35 @@ glm::vec4 Tree::getCenter(int nInd, int quad) {
 void Tree::calculateForces(float theta, float G, float epsilon2) {
     for (int i = 0; i < static_cast<int>(m_data->size()); ++i) {
         glm::vec4 force = traverseNode(i, 0, theta, G, epsilon2);
-        m_data->velocities[i] += (force / m_data->masses[i]); 
+        m_data->accels[i] = (force / m_data->positions[i].w); 
     } 
 }
 
 glm::vec4 Tree::traverseNode(int bodyIndex, int nodeIndex, float theta, float G, float epsilon2) {
     const Node& node = m_nodes[nodeIndex];
 
-    if (node.body == -1)
-        return glm::vec4(0.f);
+    if (node.body == -1) return glm::vec4(0.f);
 
-    const glm::vec4 diff = node.cm - m_data->positions[bodyIndex];
-    const float d2       = glm::dot(diff, diff) + epsilon2;
+    glm::vec4 diff = node.cm - m_data->positions[bodyIndex];
+    diff.w = 0;
+    const float d2 = glm::dot(diff, diff) + epsilon2;
 
     if (node.body >= 0) {
-        if (node.body == bodyIndex)
-            return glm::vec4(0.f);
+        if (node.body == bodyIndex) return glm::vec4(0.f);
 
         const float invD3 = 1.f / (d2 * std::sqrt(d2));
-        return G * node.mass * m_data->masses[bodyIndex] * invD3 * diff;
+        return G * node.mass * m_data->positions[bodyIndex].w * invD3 * diff;
     }
 
     const float d = std::sqrt(d2);
     if (node.size / d < theta) {
         const float invD3 = 1.f / (d2 * std::sqrt(d2));
-        return G * node.mass * m_data->masses[bodyIndex] * invD3 * diff;
+        return G * node.mass * m_data->positions[bodyIndex].w * invD3 * diff;
     }
 
     glm::vec4 force(0.f);
     for (int c : node.children) {
-        if (c != -1)
-            force += traverseNode(bodyIndex, c, theta, G, epsilon2);
+        if (c != -1) force += traverseNode(bodyIndex, c, theta, G, epsilon2);
     }
     return force; 
 }

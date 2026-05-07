@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ObjectData.h"
+#include <glm/vec3.hpp>
 
 class ObjectView {
     public:
@@ -9,13 +10,17 @@ class ObjectView {
         ~ObjectView() = default;
 
         //=====Getter/Setters=====
-        [[nodiscard]] const glm::vec4& Position() const noexcept;
-        [[nodiscard]] glm::vec4& Position() noexcept;
-        [[nodiscard]] const glm::vec4& Velocity() const noexcept;
-        [[nodiscard]] glm::vec4& Velocity() noexcept;
-        [[nodiscard]] const float& Mass() const noexcept;
-        [[nodiscard]] float& Mass() noexcept;
-        
+
+        glm::vec3 position() const noexcept;
+        glm::vec3 velocity() const noexcept;
+        glm::vec3 acceleration() const noexcept;
+        float mass() const noexcept;
+
+        void setPosition (const glm::vec3& p) noexcept;
+        void setVelocity (const glm::vec3& v) noexcept;
+        void setAcceleration (const glm::vec3& a) noexcept;
+        void setMass (float m) noexcept;
+
     private:
         uint32_t m_id;
         ObjectData* m_data;
