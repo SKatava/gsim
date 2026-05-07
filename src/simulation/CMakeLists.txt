@@ -1,6 +1,6 @@
 set(NAME gsim-simulation)
 
-add_library(${NAME} STATIC ObjectView.cpp GravityEngine.cpp)
+add_library(${NAME} STATIC ObjectView.cpp GravityEngine.cpp Tree.cpp Integrator.cpp)
 
 target_include_directories(${NAME}
     PUBLIC

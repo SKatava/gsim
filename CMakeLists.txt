@@ -23,7 +23,7 @@ add_subdirectory(src/simulation) #gsim-simulation library
 #    add_subdirectory(src/ui)
 #endif()
 
-#add_subdirectory(tests)
+add_subdirectory(tests)
 
 add_executable(${NAME} src/main.cpp)
 

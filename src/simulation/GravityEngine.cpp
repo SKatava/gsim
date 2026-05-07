@@ -1,5 +1,7 @@
 #include "gsim-simulation/GravityEngine.h"
 
+#include "gsim-simulation/Tree.h"
+
 #include <glm/glm.hpp>
 
 //=====Core Logic=====
@@ -67,6 +69,9 @@ void GravityEngine::directImplementation(float dt) const {
 
 //Uses popular Barnes-Hut aproximation by seperating the objects in octrees
 void GravityEngine::barnesHutImplementation(float dt) const {
+    Tree tree(m_data); 
+    tree.buildTree();       
+    tree.calculateForces(0.5f, 6.674e-11f, 1e-15);
 }
 
 
